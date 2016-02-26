@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'App1',#注册app
 	
 )
 
@@ -59,25 +60,67 @@ WSGI_APPLICATION = 'mysite_test_2.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-		'NAME': 'master',#很重要！！！
-        'ENGINE': 'sqlserver_ado',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+		# 'NAME': 'master',#很重要！！！
+        # 'ENGINE': 'sqlserver_ado',
+        # 'HOST': '172.22.131.85',
+        # 'USER': 'zjn',
+        # 'PASSWORD': 'zhangjiannan',
+		# 'PORT':'',
+		# 'OPTIONS':{
+			# 'use_mars':True,
+			# 'provider':'sqloledb',#did not been tested ,do not know if this could be change
+		#	'extra_params': 'Extended Properties=PLSQLRSet=1;Persist Security Info=True;',
+		# }
+    },
+	'mssql': {
+		'NAME': 'Position_DB',#很重要！！！
+		#'NAME': 'master',#很重要！！！
+		'ENGINE': 'sqlserver_ado',
         'HOST': '172.22.131.85',
         'USER': 'zjn',
         'PASSWORD': 'zhangjiannan',
 		'PORT':'',
+		#'schema':'PFP',
 		'OPTIONS':{
 			'use_mars':True,
 			'provider':'sqloledb',#did not been tested ,do not know if this could be change
+			#'schema':'PFP',
+			#'options': '-c search_path=PFP'
 			#'extra_params': 'Extended Properties=PLSQLRSet=1;Persist Security Info=True;',
 		}
     }
+	# python manage.py inspectdb --database mssql > App1/models.py
 }
-
+LOGGING = {
+	'version': 1,
+	'disable_existing_loggers': False,
+	'handlers': {
+		'console':{
+		'level':'DEBUG',
+		'class':'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+    }
+}
+#多数据连接：确定数据库连接方式
+DATABASE_ROUTERS = ['mysite_test_2.database_router.DatabaseAppsRouter']
+DATABASE_APPS_MAPPING = {
+    # example:
+    #'app_name':'database_name',
+    'App1': 'mssql',
+}
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
+#语言及时区
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
