@@ -1,0 +1,19 @@
+{% if T_Test_For_Django_list %}
+	<ul>
+		{% for T_Test_For_Django in T_Test_For_Django_list %}
+			<li>
+				<a href="/App1/{{ T_Test_For_Django.item_id }}/">
+					{{ T_Test_For_Django.A }}
+				</a>
+				<a>
+					{{ T_Test_For_Django.B }}
+				</a>
+				<a>
+					{{ T_Test_For_Django.C }}
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No records are available.</p>
+{% endif %}

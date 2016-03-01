@@ -22,3 +22,5 @@ class T_Test_For_Django(models.Model):
 	A = models.CharField(max_length=50, db_column='Tag_System')
 	B = models.CharField(max_length=50, db_column='Tag_Name')
 	C = models.CharField(max_length=50, db_column='Tag_DataType')
+	def __unicode__(self):
+		return self.item_id	
